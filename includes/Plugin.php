@@ -51,6 +51,7 @@ class Plugin {
      */
     public function activate(): void {
         Installer::run();
+        error_log( 'CDD: Installer class loaded via PSR-4 autoloader.' );
     }
 
     /**

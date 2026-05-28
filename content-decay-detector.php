@@ -37,3 +37,4 @@ function cdd_init(): void {
     \ContentDecayDetector\Plugin::get_instance();
 }
 add_action( 'plugins_loaded', 'cdd_init' );
+
