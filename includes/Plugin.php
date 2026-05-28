@@ -42,6 +42,7 @@ class Plugin {
     private function __construct() {
         register_activation_hook( CDD_PLUGIN_FILE, [ $this, 'activate' ] );
         register_deactivation_hook( CDD_PLUGIN_FILE, [ $this, 'deactivate' ] );
+        $this->maybe_install();
     }
 
     /**
@@ -61,5 +62,18 @@ class Plugin {
      */
     public function deactivate(): void {
         // Future: clear scheduled cron events.
+    }
+
+    /**
+     * Run installer if table doesn't exist yet.
+     *
+     * Handles cases where activation hook doesn't fire correctly.
+     *
+     * @return void
+     */
+    public function maybe_install(): void {
+        if ( ! Installer::table_exists() ) {
+            Installer::run();
+        }
     }
 }
