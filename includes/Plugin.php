@@ -43,6 +43,7 @@ class Plugin {
         register_activation_hook( CDD_PLUGIN_FILE, [ $this, 'activate' ] );
         register_deactivation_hook( CDD_PLUGIN_FILE, [ $this, 'deactivate' ] );
         $this->maybe_install();
+        $this->register_admin();
     }
 
     /**
@@ -75,5 +76,16 @@ class Plugin {
         if ( ! Installer::table_exists() ) {
             Installer::run();
         }
+    }
+
+
+    /**
+     * Register admin pages and settings.
+     *
+     * @return void
+     */
+    private function register_admin(): void {
+        $settings_page = new \ContentDecayDetector\Admin\Settings_Page();
+        $settings_page->register();
     }
 }
