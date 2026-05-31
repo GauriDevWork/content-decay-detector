@@ -8,7 +8,7 @@
 namespace ContentDecayDetector;
 
 defined( 'ABSPATH' ) || exit;
-
+// phpcs:disable WordPress.Files.FileName.InvalidClassFileName, WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * Class Installer
  *
@@ -17,33 +17,33 @@ defined( 'ABSPATH' ) || exit;
  */
 class Installer {
 
-    /**
-     * Run the installer.
-     *
-     * Called on plugin activation hook.
-     *
-     * @return void
-     */
-    public static function run(): void {
-        self::create_tables();
-        self::set_default_options();
-    }
+	/**
+	 * Run the installer.
+	 *
+	 * Called on plugin activation hook.
+	 *
+	 * @return void
+	 */
+	public static function run(): void {
+		self::create_tables();
+		self::set_default_options();
+	}
 
-    /**
-     * Create custom database tables.
-     *
-     * Uses dbDelta() which is safe to run multiple times —
-     * it only creates or updates, never drops or overwrites data.
-     *
-     * @return void
-     */
-    private static function create_tables(): void {
-        global $wpdb;
+	/**
+	 * Create custom database tables.
+	 *
+	 * Uses dbDelta() which is safe to run multiple times —
+	 * it only creates or updates, never drops or overwrites data.
+	 *
+	 * @return void
+	 */
+	private static function create_tables(): void {
+		global $wpdb;
 
-        $table_name      = $wpdb->prefix . 'decay_snapshots';
-        $charset_collate = $wpdb->get_charset_collate();
+		$table_name      = $wpdb->prefix . 'decay_snapshots';
+		$charset_collate = $wpdb->get_charset_collate();
 
-        $sql = "CREATE TABLE {$table_name} (
+		$sql = "CREATE TABLE {$table_name} (
             id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
             post_id BIGINT(20) UNSIGNED NOT NULL,
             snapshot_date DATE NOT NULL,
@@ -57,29 +57,32 @@ class Installer {
             KEY snapshot_date (snapshot_date)
         ) {$charset_collate};";
 
-        require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-        dbDelta( $sql );
-    }
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		dbDelta( $sql );
+	}
 
-    /**
-     * Set default plugin options on first activation.
-     *
-     * @return void
-     */
-    private static function set_default_options(): void {
-        if ( ! get_option( 'cdd_version' ) ) {
-            update_option( 'cdd_version', CDD_VERSION );
-        }
-    }
+	/**
+	 * Set default plugin options on first activation.
+	 *
+	 * @return void
+	 */
+	private static function set_default_options(): void {
+		if ( ! get_option( 'cdd_version' ) ) {
+			update_option( 'cdd_version', CDD_VERSION );
+		}
+	}
 
-    /**
-     * Check if the database table exists.
-     *
-     * @return bool
-     */
-    public static function table_exists(): bool {
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'decay_snapshots';
-        return $wpdb->get_var( "SHOW TABLES LIKE '{$table_name}'" ) === $table_name;
-    }
+	/**
+	 * Check if the database table exists.
+	 *
+	 * @return bool
+	 */
+	public static function table_exists(): bool {
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'decay_snapshots';
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+		return $wpdb->get_var(
+			$wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name )
+		) === $table_name;
+	}
 }

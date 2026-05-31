@@ -11,6 +11,8 @@
  * Text Domain: content-decay-detector
  * Requires at least: 6.0
  * Requires PHP: 8.0
+ *
+ * @package ContentDecayDetector
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -23,7 +25,7 @@ define( 'CDD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 // Autoloader.
 if ( file_exists( CDD_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
-    require_once CDD_PLUGIN_DIR . 'vendor/autoload.php';
+	require_once CDD_PLUGIN_DIR . 'vendor/autoload.php';
 }
 
 /**
@@ -34,6 +36,6 @@ if ( file_exists( CDD_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
  * @return void
  */
 function cdd_init(): void {
-    \ContentDecayDetector\Plugin::get_instance();
+	\ContentDecayDetector\Plugin::get_instance();
 }
 add_action( 'plugins_loaded', 'cdd_init' );

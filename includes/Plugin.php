@@ -8,7 +8,7 @@
 namespace ContentDecayDetector;
 
 defined( 'ABSPATH' ) || exit;
-
+// phpcs:disable WordPress.Files.FileName.InvalidClassFileName, WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * Class Plugin
  *
@@ -17,75 +17,74 @@ defined( 'ABSPATH' ) || exit;
  */
 class Plugin {
 
-    /**
-     * Singleton instance.
-     *
-     * @var Plugin|null
-     */
-    private static ?Plugin $instance = null;
+	/**
+	 * Singleton instance.
+	 *
+	 * @var Plugin|null
+	 */
+	private static ?Plugin $instance = null;
 
-    /**
-     * Get or create the singleton instance.
-     *
-     * @return Plugin
-     */
-    public static function get_instance(): Plugin {
-        if ( null === self::$instance ) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
+	/**
+	 * Get or create the singleton instance.
+	 *
+	 * @return Plugin
+	 */
+	public static function get_instance(): Plugin {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
 
-    /**
-     * Constructor. Registers activation and deactivation hooks.
-     */
-    private function __construct() {
-        register_activation_hook( CDD_PLUGIN_FILE, [ $this, 'activate' ] );
-        register_deactivation_hook( CDD_PLUGIN_FILE, [ $this, 'deactivate' ] );
-        $this->maybe_install();
-        $this->register_admin();
-    }
+	/**
+	 * Constructor. Registers activation and deactivation hooks.
+	 */
+	private function __construct() {
+		register_activation_hook( CDD_PLUGIN_FILE, array( $this, 'activate' ) );
+		register_deactivation_hook( CDD_PLUGIN_FILE, array( $this, 'deactivate' ) );
+		$this->maybe_install();
+		$this->register_admin();
+	}
 
-    /**
-     * Runs on plugin activation.
-     *
-     * @return void
-     */
-    public function activate(): void {
-        Installer::run();
-        error_log( 'CDD: Installer class loaded via PSR-4 autoloader.' );
-    }
+	/**
+	 * Runs on plugin activation.
+	 *
+	 * @return void
+	 */
+	public function activate(): void {
+		Installer::run();
+	}
 
-    /**
-     * Runs on plugin deactivation.
-     *
-     * @return void
-     */
-    public function deactivate(): void {
-        // Future: clear scheduled cron events.
-    }
+	/**
+	 * Runs on plugin deactivation.
+	 *
+	 * @return void
+	 */
+	public function deactivate(): void {
+		// Future: clear scheduled cron events.
+	}
 
-    /**
-     * Run installer if table doesn't exist yet.
-     *
-     * Handles cases where activation hook doesn't fire correctly.
-     *
-     * @return void
-     */
-    public function maybe_install(): void {
-        if ( ! Installer::table_exists() ) {
-            Installer::run();
-        }
-    }
+	/**
+	 * Run installer if table doesn't exist yet.
+	 *
+	 * Handles cases where activation hook doesn't fire correctly.
+	 *
+	 * @return void
+	 */
+	public function maybe_install(): void {
+		if ( ! Installer::table_exists() ) {
+			Installer::run();
+		}
+	}
 
 
-    /**
-     * Register admin pages and settings.
-     *
-     * @return void
-     */
-    private function register_admin(): void {
-        $settings_page = new \ContentDecayDetector\Admin\Settings_Page();
-        $settings_page->register();
-    }
+	/**
+	 * Register admin pages and settings.
+	 *
+	 * @return void
+	 */
+	private function register_admin(): void {
+		$settings_page = new \ContentDecayDetector\Admin\Settings_Page();
+		$settings_page->register();
+	}
 }
