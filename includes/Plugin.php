@@ -44,6 +44,7 @@ class Plugin {
 		register_deactivation_hook( CDD_PLUGIN_FILE, array( $this, 'deactivate' ) );
 		$this->maybe_install();
 		$this->register_admin();
+		$this->register_scanner();
 	}
 
 	/**
@@ -53,6 +54,7 @@ class Plugin {
 	 */
 	public function activate(): void {
 		Installer::run();
+		Scanner::schedule();
 	}
 
 	/**
@@ -61,7 +63,7 @@ class Plugin {
 	 * @return void
 	 */
 	public function deactivate(): void {
-		// Future: clear scheduled cron events.
+		Scanner::unschedule();
 	}
 
 	/**
@@ -86,5 +88,15 @@ class Plugin {
 	private function register_admin(): void {
 		$settings_page = new \ContentDecayDetector\Admin\Settings_Page();
 		$settings_page->register();
+	}
+
+	/**
+	 * Register the scanner and cron hooks.
+	 *
+	 * @return void
+	 */
+	private function register_scanner(): void {
+		$scanner = new Scanner( new Settings(), new PostSnapshot() );
+		$scanner->register();
 	}
 }
