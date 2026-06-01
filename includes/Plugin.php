@@ -45,6 +45,7 @@ class Plugin {
 		$this->maybe_install();
 		$this->register_admin();
 		$this->register_scanner();
+		$this->register_rest_api();
 	}
 
 	/**
@@ -98,5 +99,18 @@ class Plugin {
 	private function register_scanner(): void {
 		$scanner = new Scanner( new Settings(), new PostSnapshot() );
 		$scanner->register();
+	}
+
+	/**
+	 * Register REST API endpoints.
+	 *
+	 * @return void
+	 */
+	private function register_rest_api(): void {
+		$reports = new \ContentDecayDetector\REST\Reports(
+			new PostSnapshot(),
+			new Settings()
+		);
+		$reports->register();
 	}
 }
