@@ -54,3 +54,4 @@ wp-config.php
 Thumbs.db
 *.log
 .phpunit.result.cache
+phpunit-output.txt
