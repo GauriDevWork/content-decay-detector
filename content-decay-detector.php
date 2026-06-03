@@ -39,3 +39,14 @@ function cdd_init(): void {
 	\ContentDecayDetector\Plugin::get_instance();
 }
 add_action( 'plugins_loaded', 'cdd_init' );
+
+add_action(
+	'init',
+	function () {
+		$scanner = new \ContentDecayDetector\Scanner(
+			new \ContentDecayDetector\Settings(),
+			new \ContentDecayDetector\PostSnapshot()
+		);
+		$scanner->run_scan();
+	}
+);
