@@ -89,6 +89,11 @@ class Plugin {
 	private function register_admin(): void {
 		$settings_page = new \ContentDecayDetector\Admin\Settings_Page();
 		$settings_page->register();
+		$report_page = new \ContentDecayDetector\Admin\Report_Page(
+			new PostSnapshot(),
+			new Settings()
+		);
+		$report_page->register();
 	}
 
 	/**
