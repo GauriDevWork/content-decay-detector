@@ -101,12 +101,26 @@ class Report_Page {
 			return;
 		}
 
-		$table = new Report_Table( $this->snapshot, $this->settings );
+		// Handle score filter.
+		$min_score = isset( $_GET['min_score'] ) ? absint( $_GET['min_score'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification
+		$max_score = isset( $_GET['max_score'] ) ? absint( $_GET['max_score'] ) : 100; // phpcs:ignore WordPress.Security.NonceVerification
+
+		$table = new Report_Table( $this->snapshot, $this->settings, $min_score, $max_score );
 		$table->prepare_items();
 		?>
 		<div class="wrap">
 			<h1><?php echo esc_html__( 'Content Decay Report', 'content-decay-detector' ); ?></h1>
 			<p><?php echo esc_html__( 'Posts flagged as decaying based on traffic drop threshold.', 'content-decay-detector' ); ?></p>
+
+			<form method="get" style="margin-bottom:16px;">
+				<input type="hidden" name="page" value="cdd-decay-report" />
+				<label for="min_score"><?php echo esc_html__( 'Score between:', 'content-decay-detector' ); ?></label>
+				<input type="number" id="min_score" name="min_score" value="<?php echo esc_attr( $min_score ); ?>" min="0" max="100" style="width:60px;" />
+				<span> &ndash; </span>
+				<input type="number" name="max_score" value="<?php echo esc_attr( $max_score ); ?>" min="0" max="100" style="width:60px;" />
+				<?php submit_button( __( 'Filter', 'content-decay-detector' ), 'secondary', 'filter', false ); ?>
+			</form>
+
 			<form method="get">
 				<input type="hidden" name="page" value="cdd-decay-report" />
 				<?php $table->display(); ?>

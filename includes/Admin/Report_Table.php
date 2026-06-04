@@ -41,12 +41,28 @@ class Report_Table extends \WP_List_Table {
 	private Settings $settings;
 
 	/**
+	 * Minimum score filter.
+	 *
+	 * @var int
+	 */
+	private int $min_score = 0;
+
+	/**
+	 * Maximum score filter.
+	 *
+	 * @var int
+	 */
+	private int $max_score = 100;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param PostSnapshot $snapshot PostSnapshot instance.
 	 * @param Settings     $settings Settings instance.
+	 * @param int          $min_score Minimum score filter.
+	 * @param int          $max_score Maximum score filter.
 	 */
-	public function __construct( PostSnapshot $snapshot, Settings $settings ) {
+	public function __construct( PostSnapshot $snapshot, Settings $settings, int $min_score = 0, int $max_score = 100 ) {
 		parent::__construct(
 			array(
 				'singular' => 'decaying_post',
@@ -55,8 +71,10 @@ class Report_Table extends \WP_List_Table {
 			)
 		);
 
-		$this->snapshot = $snapshot;
-		$this->settings = $settings;
+		$this->snapshot  = $snapshot;
+		$this->settings  = $settings;
+		$this->min_score = $min_score;
+		$this->max_score = $max_score;
 	}
 
 	/**
@@ -224,7 +242,15 @@ class Report_Table extends \WP_List_Table {
 	public function prepare_items(): void {
 		$threshold = $this->settings->get_threshold();
 		$data      = $this->snapshot->get_flagged( $threshold );
-
+		// Apply score range filter.
+		$data = array_filter(
+			$data,
+			function ( $item ) {
+				$score = (int) $item['decay_score'];
+				return $score >= $this->min_score && $score <= $this->max_score;
+			}
+		);
+		$data = array_values( $data );
 		// Handle sorting.
 		$orderby = isset( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : 'decay_score'; // phpcs:ignore WordPress.Security.NonceVerification
 		$order   = isset( $_GET['order'] ) && 'asc' === $_GET['order'] ? 'asc' : 'desc'; // phpcs:ignore WordPress.Security.NonceVerification
