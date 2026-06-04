@@ -54,6 +54,7 @@ class Report_Page {
 	public function register(): void {
 		add_action( 'admin_menu', array( $this, 'add_menu_page' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+		add_action( 'admin_init', array( $this, 'process_bulk_actions' ) );
 	}
 
 	/**
@@ -112,5 +113,39 @@ class Report_Page {
 			</form>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Process bulk actions submitted from the report table.
+	 *
+	 * @return void
+	 */
+	public function process_bulk_actions(): void {
+		if ( ! isset( $_GET['action'] ) || ! isset( $_GET['snapshot_ids'] ) ) {
+			return;
+		}
+
+		// Verify nonce.
+		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'bulk-decaying_posts' ) ) {
+			wp_die( esc_html__( 'Security check failed.', 'content-decay-detector' ) );
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You do not have permission to perform this action.', 'content-decay-detector' ) );
+		}
+
+		$action       = sanitize_text_field( wp_unslash( $_GET['action'] ) );
+		$snapshot_ids = array_map( 'absint', $_GET['snapshot_ids'] );
+
+		foreach ( $snapshot_ids as $id ) {
+			if ( 'mark_reviewed' === $action ) {
+				$this->snapshot->mark_reviewed( $id );
+			} elseif ( 'exclude' === $action ) {
+				$this->snapshot->delete( $id );
+			}
+		}
+
+		wp_safe_redirect( admin_url( 'tools.php?page=cdd-decay-report&bulk_action=done' ) );
+		exit;
 	}
 }
