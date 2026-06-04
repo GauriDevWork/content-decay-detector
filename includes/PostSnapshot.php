@@ -141,4 +141,35 @@ class PostSnapshot {
 			array( '%d' )
 		);
 	}
+
+	/**
+	 * Mark a snapshot as reviewed.
+	 *
+	 * @param int $id Snapshot ID.
+	 *
+	 * @return bool True on success.
+	 */
+	public function mark_reviewed( int $id ): bool {
+		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+		$result = $wpdb->update(
+			$this->table,
+			array( 'is_reviewed' => 1 ),
+			array( 'id' => $id ),
+			array( '%d' ),
+			array( '%d' )
+		);
+		return false !== $result;
+	}
+
+	/**
+	 * Delete all snapshots for a post to exclude it from future scans.
+	 *
+	 * @param int $post_id Post ID.
+	 *
+	 * @return bool True on success.
+	 */
+	public function exclude_post( int $post_id ): bool {
+		return false !== $this->delete( $post_id );
+	}
 }
