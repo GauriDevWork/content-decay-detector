@@ -46,6 +46,7 @@ class Plugin {
 		$this->register_admin();
 		$this->register_scanner();
 		$this->register_rest_api();
+		$this->register_email();
 	}
 
 	/**
@@ -94,6 +95,11 @@ class Plugin {
 			new Settings()
 		);
 		$report_page->register();
+		$dashboard_widget = new \ContentDecayDetector\Admin\Dashboard_Widget(
+			new PostSnapshot(),
+			new Settings()
+		);
+		$dashboard_widget->register();
 	}
 
 	/**
@@ -117,5 +123,15 @@ class Plugin {
 			new Settings()
 		);
 		$reports->register();
+	}
+
+	/**
+	 * Register email digest hooks.
+	 *
+	 * @return void
+	 */
+	private function register_email(): void {
+		$email = new Email( new PostSnapshot(), new Settings() );
+		$email->register();
 	}
 }
