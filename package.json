@@ -1,0 +1,27 @@
+{
+  "name": "content-decay-detector",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
+   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GauriDevWork/content-decay-detector.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GauriDevWork/content-decay-detector/issues"
+  },
+  "homepage": "https://github.com/GauriDevWork/content-decay-detector#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "^32.4.0"
+  }
+}
