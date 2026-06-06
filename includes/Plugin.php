@@ -100,6 +100,8 @@ class Plugin {
 			new Settings()
 		);
 		$dashboard_widget->register();
+		$block_editor = new \ContentDecayDetector\Admin\Block_Editor();
+		$block_editor->register();
 	}
 
 	/**
