@@ -160,7 +160,10 @@ class Settings_Page {
 	 */
 	public function render_email_field(): void {
 		$value = get_option( 'cdd_email_notifications', true );
-		echo '<input type="checkbox" name="cdd_email_notifications" value="1" ' . checked( 1, $value, false ) . ' />';
+		echo '<label for="cdd_email_notifications">';
+		echo '<input type="checkbox" id="cdd_email_notifications" name="cdd_email_notifications" value="1" ' . checked( 1, $value, false ) . ' />';
+		echo ' ' . esc_html__( 'Enable weekly email digest', 'content-decay-detector' );
+		echo '</label>';
 		echo '<p class="description">' . esc_html__( 'Send a weekly email digest of decaying posts to the admin.', 'content-decay-detector' ) . '</p>';
 	}
 
