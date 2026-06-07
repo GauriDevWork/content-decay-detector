@@ -115,9 +115,10 @@ class Report_Page {
 			<form method="get" style="margin-bottom:16px;">
 				<input type="hidden" name="page" value="cdd-decay-report" />
 				<label for="min_score"><?php echo esc_html__( 'Score between:', 'content-decay-detector' ); ?></label>
-				<input type="number" id="min_score" name="min_score" value="<?php echo esc_attr( $min_score ); ?>" min="0" max="100" style="width:60px;" />
-				<span> &ndash; </span>
-				<input type="number" name="max_score" value="<?php echo esc_attr( $max_score ); ?>" min="0" max="100" style="width:60px;" />
+				<input type="number" id="min_score" name="min_score" value="<?php echo esc_attr( $min_score ); ?>" min="0" max="100" style="width:60px;" aria-label="<?php echo esc_attr__( 'Minimum decay score', 'content-decay-detector' ); ?>" />
+				<span aria-hidden="true"> &ndash; </span>
+				<label for="max_score" class="screen-reader-text"><?php echo esc_html__( 'Maximum decay score', 'content-decay-detector' ); ?></label>
+				<input type="number" id="max_score" name="max_score" value="<?php echo esc_attr( $max_score ); ?>" min="0" max="100" style="width:60px;" aria-label="<?php echo esc_attr__( 'Maximum decay score', 'content-decay-detector' ); ?>" />
 				<?php submit_button( __( 'Filter', 'content-decay-detector' ), 'secondary', 'filter', false ); ?>
 			</form>
 

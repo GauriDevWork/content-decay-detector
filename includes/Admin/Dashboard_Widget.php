@@ -86,8 +86,8 @@ class Dashboard_Widget {
 
 		echo '<table style="width:100%;border-collapse:collapse;">';
 		echo '<thead><tr>';
-		echo '<th style="text-align:left;padding:6px 8px;border-bottom:1px solid #ddd;">' . esc_html__( 'Post', 'content-decay-detector' ) . '</th>';
-		echo '<th style="text-align:center;padding:6px 8px;border-bottom:1px solid #ddd;">' . esc_html__( 'Score', 'content-decay-detector' ) . '</th>';
+		echo '<th scope="col" style="text-align:left;padding:6px 8px;border-bottom:1px solid #ddd;">' . esc_html__( 'Post', 'content-decay-detector' ) . '</th>';
+		echo '<th scope="col" style="text-align:center;padding:6px 8px;border-bottom:1px solid #ddd;">' . esc_html__( 'Score', 'content-decay-detector' ) . '</th>';
 		echo '</tr></thead>';
 		echo '<tbody>';
 
