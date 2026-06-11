@@ -12,10 +12,10 @@ namespace ContentDecayDetector;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class Scanner
+ * Runs the weekly decay scan via WP Cron.
  *
- * Registers and handles the WP Cron job that scans all published
- * posts for content decay. Processes posts in batches to avoid timeouts.
+ * Fetches all published posts in batches of 50, scores each one,
+ * generates suggestions, and saves a snapshot to the database.
  */
 class Scanner {
 
@@ -145,8 +145,7 @@ class Scanner {
 	 * @return void
 	 */
 	private function process_post( int $post_id ): void {
-		// Get mock traffic score for now.
-		// Phase 3 will replace this with real GSC data.
+		// Mock traffic score — replace with GSC API data in a future version.
 		$traffic_score = $this->get_mock_traffic_score( $post_id );
 
 		// Get previous snapshot to calculate decay.

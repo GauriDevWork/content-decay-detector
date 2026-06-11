@@ -10,10 +10,10 @@ namespace ContentDecayDetector;
 defined( 'ABSPATH' ) || exit;
 // phpcs:disable WordPress.Files.FileName.InvalidClassFileName, WordPress.Files.FileName.NotHyphenatedLowercase
 /**
- * Class PostSnapshot
+ * The only class allowed to touch the wp_decay_snapshots table.
  *
- * Handles all database operations for the wp_decay_snapshots table.
- * All reads and writes to this table go through this class only.
+ * All reads and writes go through here — keeps DB logic in one place
+ * and makes it easy to swap the storage layer later if needed.
  */
 class PostSnapshot {
 
@@ -126,11 +126,13 @@ class PostSnapshot {
 	}
 
 	/**
-	 * Delete all snapshots for a specific post.
+	 * Remove a post from the report by deleting its snapshots.
 	 *
-	 * @param int $post_id The post ID.
+	 * The scanner won't flag it again until new snapshots are taken.
 	 *
-	 * @return int|false Number of rows deleted or false on failure.
+	 * @param int $post_id Post ID.
+	 *
+	 * @return bool True on success.
 	 */
 	public function delete( int $post_id ): int|false {
 		global $wpdb;

@@ -10,10 +10,10 @@ namespace ContentDecayDetector;
 defined( 'ABSPATH' ) || exit;
 // phpcs:disable WordPress.Files.FileName.InvalidClassFileName, WordPress.Files.FileName.NotHyphenatedLowercase
 /**
- * Class Settings
+ * Single source of truth for all plugin options.
  *
- * Wraps all get_option() and update_option() calls for this plugin.
- * No other class should ever call get_option( 'cdd_...' ) directly.
+ * Nothing outside this class calls get_option( 'cdd_...' ) directly.
+ * Change an option key here and it updates everywhere automatically.
  */
 class Settings {
 

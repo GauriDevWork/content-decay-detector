@@ -10,10 +10,10 @@ namespace ContentDecayDetector;
 defined( 'ABSPATH' ) || exit;
 // phpcs:disable WordPress.Files.FileName.InvalidClassFileName, WordPress.Files.FileName.NotHyphenatedLowercase
 /**
- * Class Plugin
+ * Main plugin class.
  *
- * Bootstraps the plugin. Registers activation, deactivation hooks
- * and loads all components via a single entry point.
+ * Wires everything together — admin pages, scanner, REST API, and email.
+ * Only one instance ever exists thanks to the singleton pattern.
  */
 class Plugin {
 
@@ -69,9 +69,9 @@ class Plugin {
 	}
 
 	/**
-	 * Run installer if table doesn't exist yet.
+	 * Safety net for environments where the activation hook doesn't fire.
 	 *
-	 * Handles cases where activation hook doesn't fire correctly.
+	 * Checks for the DB table on every load and creates it if missing.
 	 *
 	 * @return void
 	 */
@@ -83,7 +83,9 @@ class Plugin {
 
 
 	/**
-	 * Register admin pages and settings.
+	 * Boot all admin-facing components.
+	 *
+	 * Settings page, report table, dashboard widget, and block editor panel.
 	 *
 	 * @return void
 	 */
