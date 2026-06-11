@@ -10,10 +10,10 @@ namespace ContentDecayDetector;
 defined( 'ABSPATH' ) || exit;
 // phpcs:disable WordPress.Files.FileName.InvalidClassFileName, WordPress.Files.FileName.NotHyphenatedLowercase
 /**
- * Class Installer
+ * Sets up the plugin on first activation.
  *
- * Handles plugin activation tasks: creates database tables
- * and sets default plugin options.
+ * Creates the database table and seeds default options.
+ * Safe to run multiple times — dbDelta() handles that gracefully.
  */
 class Installer {
 
@@ -73,9 +73,12 @@ class Installer {
 	}
 
 	/**
-	 * Check if the database table exists.
+	 * Quick check before running the installer.
 	 *
-	 * @return bool
+	 * Used as a guard in Plugin::maybe_install() to avoid
+	 * unnecessary dbDelta() calls on every page load.
+	 *
+	 * @return bool True if the table exists.
 	 */
 	public static function table_exists(): bool {
 		global $wpdb;

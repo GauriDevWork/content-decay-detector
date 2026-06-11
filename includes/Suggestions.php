@@ -12,10 +12,10 @@ namespace ContentDecayDetector;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class Suggestions
+ * Figures out what's wrong with a decaying post and suggests fixes.
  *
- * Generates rule-based suggestions for a decaying post.
- * Each rule checks a specific condition and returns a suggestion string.
+ * Each private method checks one condition. Add new rules here as
+ * the detection logic grows.
  */
 class Suggestions {
 
