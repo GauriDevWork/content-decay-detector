@@ -4,8 +4,8 @@
  * Plugin URI:  https://github.com/GauriDevWork/content-decay-detector
  * Description: Detects decaying WordPress content by tracking traffic snapshots, scoring posts, and suggesting actionable fixes before rankings drop.
  * Version:     0.1.0
- * Author:      Gauri
- * Author URI:  https://github.com/GauriDevWork
+ * Author:      Gauri Kaushik
+ * Author URI:  https://profiles.wordpress.org/gauri87/
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: content-decay-detector
@@ -40,13 +40,3 @@ function cdd_init(): void {
 }
 add_action( 'plugins_loaded', 'cdd_init' );
 
-add_action(
-	'init',
-	function () {
-		$scanner = new \ContentDecayDetector\Scanner(
-			new \ContentDecayDetector\Settings(),
-			new \ContentDecayDetector\PostSnapshot()
-		);
-		$scanner->run_scan();
-	}
-);
