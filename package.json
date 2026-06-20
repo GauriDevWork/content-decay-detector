@@ -15,8 +15,8 @@
     "url": "git+https://github.com/GauriDevWork/content-decay-detector.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "GPL-2.0-or-later",
+  "author": "Gauri Kaushik",
   "bugs": {
     "url": "https://github.com/GauriDevWork/content-decay-detector/issues"
   },
