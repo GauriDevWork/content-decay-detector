@@ -145,8 +145,8 @@ class Scanner {
 	 * @return void
 	 */
 	private function process_post( int $post_id ): void {
-		// Mock traffic score — replace with GSC API data in a future version.
-		$traffic_score = $this->get_mock_traffic_score( $post_id );
+		// Calculate content health score from real WordPress post data.
+		$traffic_score = $this->get_content_health_score( $post_id );
 
 		// Get previous snapshot to calculate decay.
 		$previous = $this->snapshot->get_latest( $post_id );
@@ -163,21 +163,42 @@ class Scanner {
 	}
 
 	/**
-	 * Generate a mock traffic score for testing purposes.
+	 * Calculate a content health score based on real WordPress data.
 	 *
-	 * Returns a realistic-looking score that slightly varies each time
-	 * to simulate real traffic fluctuations.
+	 * Replaces the mock traffic score with a real score derived from:
+	 * - Post age (max 50 points) — recently updated content scores higher
+	 * - Word count (max 30 points) — longer content scores higher
+	 * - Comment count (max 20 points) — more engagement scores higher
 	 *
 	 * @param int $post_id The post ID.
 	 *
-	 * @return int Mock traffic score.
+	 * @return int Content health score between 0 and 100.
 	 */
-	private function get_mock_traffic_score( int $post_id ): int {
-		// Use post ID as seed for consistency, with small random variation.
-		$base      = ( $post_id * 137 ) % 1000;
-		$variation = wp_rand( -50, 50 );
-		return max( 0, $base + $variation );
+	private function get_content_health_score( int $post_id ): int {
+		$post = get_post( $post_id );
+
+		if ( ! $post ) {
+			return 0;
+		}
+
+		// Age score (max 50 points).
+		// A post updated today scores 50. After 730 days (2 years) scores 0.
+		$days_old  = ( time() - strtotime( $post->post_modified ) ) / DAY_IN_SECONDS;
+		$age_score = (int) max( 0, 50 - ( $days_old / 730 * 50 ) );
+
+		// Word count score (max 30 points).
+		// 1000+ words scores 30. Under 100 words scores 0.
+		$word_count       = str_word_count( wp_strip_all_tags( $post->post_content ) );
+		$word_score       = (int) min( 30, ( $word_count / 1000 ) * 30 );
+
+		// Comment score (max 20 points).
+		// 10+ comments scores 20. 0 comments scores 0.
+		$comment_count    = (int) $post->comment_count;
+		$comment_score    = (int) min( 20, ( $comment_count / 10 ) * 20 );
+
+		return $age_score + $word_score + $comment_score;
 	}
+
 
 	/**
 	 * Calculate the decay score for a post.

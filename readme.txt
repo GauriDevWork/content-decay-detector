@@ -42,7 +42,7 @@ Content Decay Detector runs a weekly background scan across all published posts,
 
 = Where does the traffic data come from? =
 
-Version 0.1.0 uses a mock traffic score for demonstration purposes. A real Google Search Console API integration is planned for a future release.
+The plugin calculates a content health score using real WordPress data — post age, word count, and comment count. No external API or third-party service is required.
 
 = Will this plugin slow down my site? =
 
