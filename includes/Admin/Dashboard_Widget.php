@@ -64,7 +64,7 @@ class Dashboard_Widget {
 	public function add_widget(): void {
 		wp_add_dashboard_widget(
 			'cdd_decay_widget',
-			__( 'Content Decay — Top 5 Decaying Posts', 'content-decay-detector' ),
+			__( 'Content Decay — Top 5 Decaying Posts', 'post-decay-detector' ),
 			array( $this, 'render_widget' )
 		);
 	}
@@ -80,14 +80,14 @@ class Dashboard_Widget {
 		$snapshots = array_slice( $snapshots, 0, 5 );
 
 		if ( empty( $snapshots ) ) {
-			echo '<p>' . esc_html__( 'No decaying posts detected. Great job!', 'content-decay-detector' ) . '</p>';
+			echo '<p>' . esc_html__( 'No decaying posts detected. Great job!', 'post-decay-detector' ) . '</p>';
 			return;
 		}
 
 		echo '<table style="width:100%;border-collapse:collapse;">';
 		echo '<thead><tr>';
-		echo '<th scope="col" style="text-align:left;padding:6px 8px;border-bottom:1px solid #ddd;">' . esc_html__( 'Post', 'content-decay-detector' ) . '</th>';
-		echo '<th scope="col" style="text-align:center;padding:6px 8px;border-bottom:1px solid #ddd;">' . esc_html__( 'Score', 'content-decay-detector' ) . '</th>';
+		echo '<th scope="col" style="text-align:left;padding:6px 8px;border-bottom:1px solid #ddd;">' . esc_html__( 'Post', 'post-decay-detector' ) . '</th>';
+		echo '<th scope="col" style="text-align:center;padding:6px 8px;border-bottom:1px solid #ddd;">' . esc_html__( 'Score', 'post-decay-detector' ) . '</th>';
 		echo '</tr></thead>';
 		echo '<tbody>';
 
@@ -113,7 +113,7 @@ class Dashboard_Widget {
 		echo '</tbody></table>';
 
 		echo '<p style="margin-top:12px;text-align:right;">';
-		echo '<a href="' . esc_url( admin_url( 'tools.php?page=cdd-decay-report' ) ) . '">' . esc_html__( 'View full report &rarr;', 'content-decay-detector' ) . '</a>';
+		echo '<a href="' . esc_url( admin_url( 'tools.php?page=cdd-decay-report' ) ) . '">' . esc_html__( 'View full report &rarr;', 'post-decay-detector' ) . '</a>';
 		echo '</p>';
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Content Decay Detector
+ * Plugin Name: Post Decay Detector
  * Plugin URI:  https://github.com/GauriDevWork/content-decay-detector
  * Description: Detects decaying WordPress content by tracking traffic snapshots, scoring posts, and suggesting actionable fixes before rankings drop.
  * Version:     0.1.0
@@ -8,7 +8,7 @@
  * Author URI:  https://profiles.wordpress.org/gauri87/
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: content-decay-detector
+ * Text Domain: post-decay-detector
  * Requires at least: 6.0
  * Requires PHP: 8.0
  *

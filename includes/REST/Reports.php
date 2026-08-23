@@ -101,7 +101,7 @@ class Reports {
 		if ( ! is_user_logged_in() ) {
 			return new \WP_Error(
 				'rest_not_logged_in',
-				__( 'You must be logged in to access decay reports.', 'content-decay-detector' ),
+				__( 'You must be logged in to access decay reports.', 'post-decay-detector' ),
 				array( 'status' => 401 )
 			);
 		}
@@ -109,7 +109,7 @@ class Reports {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return new \WP_Error(
 				'rest_forbidden',
-				__( 'You do not have permission to access decay reports.', 'content-decay-detector' ),
+				__( 'You do not have permission to access decay reports.', 'post-decay-detector' ),
 				array( 'status' => 403 )
 			);
 		}

@@ -64,8 +64,8 @@ class Report_Page {
 	 */
 	public function add_menu_page(): void {
 		add_management_page(
-			__( 'Decay Report', 'content-decay-detector' ),
-			__( 'Decay Report', 'content-decay-detector' ),
+			__( 'Decay Report', 'post-decay-detector' ),
+			__( 'Decay Report', 'post-decay-detector' ),
 			'manage_options',
 			'cdd-decay-report',
 			array( $this, 'render_page' )
@@ -109,17 +109,17 @@ class Report_Page {
 		$table->prepare_items();
 		?>
 		<div class="wrap">
-			<h1><?php echo esc_html__( 'Content Decay Report', 'content-decay-detector' ); ?></h1>
-			<p><?php echo esc_html__( 'Posts flagged as decaying based on traffic drop threshold.', 'content-decay-detector' ); ?></p>
+			<h1><?php echo esc_html__( 'Content Decay Report', 'post-decay-detector' ); ?></h1>
+			<p><?php echo esc_html__( 'Posts flagged as decaying based on traffic drop threshold.', 'post-decay-detector' ); ?></p>
 
 			<form method="get" style="margin-bottom:16px;">
 				<input type="hidden" name="page" value="cdd-decay-report" />
-				<label for="min_score"><?php echo esc_html__( 'Score between:', 'content-decay-detector' ); ?></label>
-				<input type="number" id="min_score" name="min_score" value="<?php echo esc_attr( $min_score ); ?>" min="0" max="100" style="width:60px;" aria-label="<?php echo esc_attr__( 'Minimum decay score', 'content-decay-detector' ); ?>" />
+				<label for="min_score"><?php echo esc_html__( 'Score between:', 'post-decay-detector' ); ?></label>
+				<input type="number" id="min_score" name="min_score" value="<?php echo esc_attr( $min_score ); ?>" min="0" max="100" style="width:60px;" aria-label="<?php echo esc_attr__( 'Minimum decay score', 'post-decay-detector' ); ?>" />
 				<span aria-hidden="true"> &ndash; </span>
-				<label for="max_score" class="screen-reader-text"><?php echo esc_html__( 'Maximum decay score', 'content-decay-detector' ); ?></label>
-				<input type="number" id="max_score" name="max_score" value="<?php echo esc_attr( $max_score ); ?>" min="0" max="100" style="width:60px;" aria-label="<?php echo esc_attr__( 'Maximum decay score', 'content-decay-detector' ); ?>" />
-				<?php submit_button( __( 'Filter', 'content-decay-detector' ), 'secondary', 'filter', false ); ?>
+				<label for="max_score" class="screen-reader-text"><?php echo esc_html__( 'Maximum decay score', 'post-decay-detector' ); ?></label>
+				<input type="number" id="max_score" name="max_score" value="<?php echo esc_attr( $max_score ); ?>" min="0" max="100" style="width:60px;" aria-label="<?php echo esc_attr__( 'Maximum decay score', 'post-decay-detector' ); ?>" />
+				<?php submit_button( __( 'Filter', 'post-decay-detector' ), 'secondary', 'filter', false ); ?>
 			</form>
 
 			<form method="get">
@@ -142,11 +142,11 @@ class Report_Page {
 
 		// Verify nonce.
 		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'bulk-decaying_posts' ) ) {
-			wp_die( esc_html__( 'Security check failed.', 'content-decay-detector' ) );
+			wp_die( esc_html__( 'Security check failed.', 'post-decay-detector' ) );
 		}
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have permission to perform this action.', 'content-decay-detector' ) );
+			wp_die( esc_html__( 'You do not have permission to perform this action.', 'post-decay-detector' ) );
 		}
 
 		$action       = sanitize_text_field( wp_unslash( $_GET['action'] ) );

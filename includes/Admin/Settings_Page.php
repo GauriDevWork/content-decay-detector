@@ -34,10 +34,10 @@ class Settings_Page {
 	 */
 	public function add_menu_page(): void {
 		add_options_page(
-			__( 'Content Decay Detector', 'content-decay-detector' ),
-			__( 'Decay Detector', 'content-decay-detector' ),
+			__( 'Content Decay Detector', 'post-decay-detector' ),
+			__( 'Decay Detector', 'post-decay-detector' ),
 			'manage_options',
-			'content-decay-detector',
+			'post-decay-detector',
 			array( $this, 'render_page' )
 		);
 	}
@@ -82,33 +82,33 @@ class Settings_Page {
 		// Add settings section.
 		add_settings_section(
 			'cdd_main_section',
-			__( 'Detection Settings', 'content-decay-detector' ),
+			__( 'Detection Settings', 'post-decay-detector' ),
 			array( $this, 'render_section_description' ),
-			'content-decay-detector'
+			'post-decay-detector'
 		);
 
 		// Add settings fields.
 		add_settings_field(
 			'cdd_decay_threshold',
-			__( 'Decay Threshold (%)', 'content-decay-detector' ),
+			__( 'Decay Threshold (%)', 'post-decay-detector' ),
 			array( $this, 'render_threshold_field' ),
-			'content-decay-detector',
+			'post-decay-detector',
 			'cdd_main_section'
 		);
 
 		add_settings_field(
 			'cdd_scan_frequency',
-			__( 'Scan Frequency', 'content-decay-detector' ),
+			__( 'Scan Frequency', 'post-decay-detector' ),
 			array( $this, 'render_frequency_field' ),
-			'content-decay-detector',
+			'post-decay-detector',
 			'cdd_main_section'
 		);
 
 		add_settings_field(
 			'cdd_email_notifications',
-			__( 'Email Notifications', 'content-decay-detector' ),
+			__( 'Email Notifications', 'post-decay-detector' ),
 			array( $this, 'render_email_field' ),
-			'content-decay-detector',
+			'post-decay-detector',
 			'cdd_main_section'
 		);
 	}
@@ -119,7 +119,7 @@ class Settings_Page {
 	 * @return void
 	 */
 	public function render_section_description(): void {
-		echo '<p>' . esc_html__( 'Configure how Content Decay Detector scans and reports decaying content.', 'content-decay-detector' ) . '</p>';
+		echo '<p>' . esc_html__( 'Configure how Content Decay Detector scans and reports decaying content.', 'post-decay-detector' ) . '</p>';
 	}
 
 	/**
@@ -130,7 +130,7 @@ class Settings_Page {
 	public function render_threshold_field(): void {
 		$value = get_option( 'cdd_decay_threshold', 30 );
 		echo '<input type="number" name="cdd_decay_threshold" value="' . esc_attr( $value ) . '" min="1" max="100" class="small-text" />';
-		echo '<p class="description">' . esc_html__( 'Flag posts that have lost this percentage of traffic compared to their peak.', 'content-decay-detector' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Flag posts that have lost this percentage of traffic compared to their peak.', 'post-decay-detector' ) . '</p>';
 	}
 
 	/**
@@ -141,16 +141,16 @@ class Settings_Page {
 	public function render_frequency_field(): void {
 		$value   = get_option( 'cdd_scan_frequency', 'weekly' );
 		$options = array(
-			'daily'   => __( 'Daily', 'content-decay-detector' ),
-			'weekly'  => __( 'Weekly', 'content-decay-detector' ),
-			'monthly' => __( 'Monthly', 'content-decay-detector' ),
+			'daily'   => __( 'Daily', 'post-decay-detector' ),
+			'weekly'  => __( 'Weekly', 'post-decay-detector' ),
+			'monthly' => __( 'Monthly', 'post-decay-detector' ),
 		);
 		echo '<select name="cdd_scan_frequency">';
 		foreach ( $options as $key => $label ) {
 			echo '<option value="' . esc_attr( $key ) . '" ' . selected( $value, $key, false ) . '>' . esc_html( $label ) . '</option>';
 		}
 		echo '</select>';
-		echo '<p class="description">' . esc_html__( 'How often should the plugin scan your posts for decay.', 'content-decay-detector' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'How often should the plugin scan your posts for decay.', 'post-decay-detector' ) . '</p>';
 	}
 
 	/**
@@ -162,9 +162,9 @@ class Settings_Page {
 		$value = get_option( 'cdd_email_notifications', true );
 		echo '<label for="cdd_email_notifications">';
 		echo '<input type="checkbox" id="cdd_email_notifications" name="cdd_email_notifications" value="1" ' . checked( 1, $value, false ) . ' />';
-		echo ' ' . esc_html__( 'Enable weekly email digest', 'content-decay-detector' );
+		echo ' ' . esc_html__( 'Enable weekly email digest', 'post-decay-detector' );
 		echo '</label>';
-		echo '<p class="description">' . esc_html__( 'Send a weekly email digest of decaying posts to the admin.', 'content-decay-detector' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Send a weekly email digest of decaying posts to the admin.', 'post-decay-detector' ) . '</p>';
 	}
 
 	/**
@@ -182,7 +182,7 @@ class Settings_Page {
 			<form method="post" action="options.php">
 				<?php
 				settings_fields( 'cdd_settings_group' );
-				do_settings_sections( 'content-decay-detector' );
+				do_settings_sections( 'post-decay-detector' );
 				submit_button();
 				?>
 			</form>

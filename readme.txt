@@ -1,4 +1,4 @@
-=== Content Decay Detector ===
+=== Post Decay Detector ===
 Contributors: gauri87
 Tags: content, seo, decay, traffic, maintenance
 Requires at least: 6.0

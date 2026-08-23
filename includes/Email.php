@@ -82,7 +82,7 @@ class Email {
 		$to      = get_option( 'admin_email' );
 		$subject = sprintf(
 			/* translators: %s: site name */
-			__( '[%s] Weekly Content Decay Report', 'content-decay-detector' ),
+			__( '[%s] Weekly Content Decay Report', 'post-decay-detector' ),
 			get_bloginfo( 'name' )
 		);
 
@@ -102,7 +102,7 @@ class Email {
 	private function build_email_body( array $snapshots ): string {
 		$site_name   = esc_html( get_bloginfo( 'name' ) );
 		$report_url  = esc_url( admin_url( 'tools.php?page=cdd-decay-report' ) );
-		$report_link = '<a href="' . $report_url . '">' . esc_html__( 'View Full Report', 'content-decay-detector' ) . '</a>';
+		$report_link = '<a href="' . $report_url . '">' . esc_html__( 'View Full Report', 'post-decay-detector' ) . '</a>';
 
 		$rows = '';
 		foreach ( $snapshots as $snapshot ) {
