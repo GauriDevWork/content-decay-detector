@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Decaywatcher — WordPress Content Decay Monitor
+ * Plugin Name: Decaywatcher
  * Plugin URI:  https://github.com/GauriDevWork/content-decay-detector
  * Description: Detects decaying WordPress content by tracking traffic snapshots, scoring posts, and suggesting actionable fixes before rankings drop.
  * Version:     0.1.0
