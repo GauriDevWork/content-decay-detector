@@ -67,8 +67,8 @@ class Installer {
 	 * @return void
 	 */
 	private static function set_default_options(): void {
-		if ( ! get_option( 'cdd_version' ) ) {
-			update_option( 'cdd_version', CDD_VERSION );
+		if ( ! get_option( 'wdcy_version' ) ) {
+			update_option( 'wdcy_version', WDCY_VERSION );
 		}
 	}
 

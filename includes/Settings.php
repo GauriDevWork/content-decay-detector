@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Single source of truth for all plugin options.
  *
- * Nothing outside this class calls get_option( 'cdd_...' ) directly.
+ * Nothing outside this class calls get_option( 'wdcy_...' ) directly.
  * Change an option key here and it updates everywhere automatically.
  */
 class Settings {
@@ -25,7 +25,7 @@ class Settings {
 	 * @return int Threshold percentage between 1 and 100. Default 30.
 	 */
 	public function get_threshold(): int {
-		return (int) get_option( 'cdd_decay_threshold', 30 );
+		return (int) get_option( 'wdcy_decay_threshold', 30 );
 	}
 
 	/**
@@ -34,7 +34,7 @@ class Settings {
 	 * @return string One of: daily, weekly, monthly. Default weekly.
 	 */
 	public function get_scan_frequency(): string {
-		return (string) get_option( 'cdd_scan_frequency', 'weekly' );
+		return (string) get_option( 'wdcy_scan_frequency', 'weekly' );
 	}
 
 	/**
@@ -43,7 +43,7 @@ class Settings {
 	 * @return bool True if enabled, false otherwise.
 	 */
 	public function is_email_enabled(): bool {
-		return (bool) get_option( 'cdd_email_notifications', true );
+		return (bool) get_option( 'wdcy_email_notifications', true );
 	}
 
 	/**
@@ -52,7 +52,7 @@ class Settings {
 	 * @return string Version string. Default empty string.
 	 */
 	public function get_version(): string {
-		return (string) get_option( 'cdd_version', '' );
+		return (string) get_option( 'wdcy_version', '' );
 	}
 
 	/**
@@ -63,7 +63,7 @@ class Settings {
 	 * @return bool True if updated successfully.
 	 */
 	public function update_threshold( int $value ): bool {
-		return update_option( 'cdd_decay_threshold', max( 1, min( 100, $value ) ) );
+		return update_option( 'wdcy_decay_threshold', max( 1, min( 100, $value ) ) );
 	}
 
 	/**
@@ -78,7 +78,7 @@ class Settings {
 		if ( ! in_array( $value, $allowed, true ) ) {
 			return false;
 		}
-		return update_option( 'cdd_scan_frequency', $value );
+		return update_option( 'wdcy_scan_frequency', $value );
 	}
 
 	/**
@@ -89,6 +89,6 @@ class Settings {
 	 * @return bool True if updated successfully.
 	 */
 	public function update_email_enabled( bool $value ): bool {
-		return update_option( 'cdd_email_notifications', $value );
+		return update_option( 'wdcy_email_notifications', $value );
 	}
 }

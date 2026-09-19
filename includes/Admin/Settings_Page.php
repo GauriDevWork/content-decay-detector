@@ -34,10 +34,10 @@ class Settings_Page {
 	 */
 	public function add_menu_page(): void {
 		add_options_page(
-			__( 'Content Decay Detector', 'post-decay-detector' ),
-			__( 'Decay Detector', 'post-decay-detector' ),
+			__( 'Content Decay Detector', 'decaywatcher' ),
+			__( 'Decay Detector', 'decaywatcher' ),
 			'manage_options',
-			'post-decay-detector',
+			'decaywatcher',
 			array( $this, 'render_page' )
 		);
 	}
@@ -50,8 +50,8 @@ class Settings_Page {
 	public function register_settings(): void {
 		// Register settings.
 		register_setting(
-			'cdd_settings_group',
-			'cdd_decay_threshold',
+			'wdcy_settings_group',
+			'wdcy_decay_threshold',
 			array(
 				'type'              => 'integer',
 				'sanitize_callback' => array( $this, 'sanitize_threshold' ),
@@ -60,8 +60,8 @@ class Settings_Page {
 		);
 
 		register_setting(
-			'cdd_settings_group',
-			'cdd_scan_frequency',
+			'wdcy_settings_group',
+			'wdcy_scan_frequency',
 			array(
 				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_text_field',
@@ -70,8 +70,8 @@ class Settings_Page {
 		);
 
 		register_setting(
-			'cdd_settings_group',
-			'cdd_email_notifications',
+			'wdcy_settings_group',
+			'wdcy_email_notifications',
 			array(
 				'type'              => 'boolean',
 				'sanitize_callback' => array( $this, 'sanitize_checkbox' ),
@@ -81,35 +81,35 @@ class Settings_Page {
 
 		// Add settings section.
 		add_settings_section(
-			'cdd_main_section',
-			__( 'Detection Settings', 'post-decay-detector' ),
+			'wdcy_main_section',
+			__( 'Detection Settings', 'decaywatcher' ),
 			array( $this, 'render_section_description' ),
-			'post-decay-detector'
+			'decaywatcher'
 		);
 
 		// Add settings fields.
 		add_settings_field(
-			'cdd_decay_threshold',
-			__( 'Decay Threshold (%)', 'post-decay-detector' ),
+			'wdcy_decay_threshold',
+			__( 'Decay Threshold (%)', 'decaywatcher' ),
 			array( $this, 'render_threshold_field' ),
-			'post-decay-detector',
-			'cdd_main_section'
+			'decaywatcher',
+			'wdcy_main_section'
 		);
 
 		add_settings_field(
-			'cdd_scan_frequency',
-			__( 'Scan Frequency', 'post-decay-detector' ),
+			'wdcy_scan_frequency',
+			__( 'Scan Frequency', 'decaywatcher' ),
 			array( $this, 'render_frequency_field' ),
-			'post-decay-detector',
-			'cdd_main_section'
+			'decaywatcher',
+			'wdcy_main_section'
 		);
 
 		add_settings_field(
-			'cdd_email_notifications',
-			__( 'Email Notifications', 'post-decay-detector' ),
+			'wdcy_email_notifications',
+			__( 'Email Notifications', 'decaywatcher' ),
 			array( $this, 'render_email_field' ),
-			'post-decay-detector',
-			'cdd_main_section'
+			'decaywatcher',
+			'wdcy_main_section'
 		);
 	}
 
@@ -119,7 +119,7 @@ class Settings_Page {
 	 * @return void
 	 */
 	public function render_section_description(): void {
-		echo '<p>' . esc_html__( 'Configure how Content Decay Detector scans and reports decaying content.', 'post-decay-detector' ) . '</p>';
+		echo '<p>' . esc_html__( 'Configure how Content Decay Detector scans and reports decaying content.', 'decaywatcher' ) . '</p>';
 	}
 
 	/**
@@ -128,9 +128,9 @@ class Settings_Page {
 	 * @return void
 	 */
 	public function render_threshold_field(): void {
-		$value = get_option( 'cdd_decay_threshold', 30 );
-		echo '<input type="number" name="cdd_decay_threshold" value="' . esc_attr( $value ) . '" min="1" max="100" class="small-text" />';
-		echo '<p class="description">' . esc_html__( 'Flag posts that have lost this percentage of traffic compared to their peak.', 'post-decay-detector' ) . '</p>';
+		$value = get_option( 'wdcy_decay_threshold', 30 );
+		echo '<input type="number" name="wdcy_decay_threshold" value="' . esc_attr( $value ) . '" min="1" max="100" class="small-text" />';
+		echo '<p class="description">' . esc_html__( 'Flag posts that have lost this percentage of traffic compared to their peak.', 'decaywatcher' ) . '</p>';
 	}
 
 	/**
@@ -139,18 +139,18 @@ class Settings_Page {
 	 * @return void
 	 */
 	public function render_frequency_field(): void {
-		$value   = get_option( 'cdd_scan_frequency', 'weekly' );
+		$value   = get_option( 'wdcy_scan_frequency', 'weekly' );
 		$options = array(
-			'daily'   => __( 'Daily', 'post-decay-detector' ),
-			'weekly'  => __( 'Weekly', 'post-decay-detector' ),
-			'monthly' => __( 'Monthly', 'post-decay-detector' ),
+			'daily'   => __( 'Daily', 'decaywatcher' ),
+			'weekly'  => __( 'Weekly', 'decaywatcher' ),
+			'monthly' => __( 'Monthly', 'decaywatcher' ),
 		);
-		echo '<select name="cdd_scan_frequency">';
+		echo '<select name="wdcy_scan_frequency">';
 		foreach ( $options as $key => $label ) {
 			echo '<option value="' . esc_attr( $key ) . '" ' . selected( $value, $key, false ) . '>' . esc_html( $label ) . '</option>';
 		}
 		echo '</select>';
-		echo '<p class="description">' . esc_html__( 'How often should the plugin scan your posts for decay.', 'post-decay-detector' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'How often should the plugin scan your posts for decay.', 'decaywatcher' ) . '</p>';
 	}
 
 	/**
@@ -159,12 +159,12 @@ class Settings_Page {
 	 * @return void
 	 */
 	public function render_email_field(): void {
-		$value = get_option( 'cdd_email_notifications', true );
-		echo '<label for="cdd_email_notifications">';
-		echo '<input type="checkbox" id="cdd_email_notifications" name="cdd_email_notifications" value="1" ' . checked( 1, $value, false ) . ' />';
-		echo ' ' . esc_html__( 'Enable weekly email digest', 'post-decay-detector' );
+		$value = get_option( 'wdcy_email_notifications', true );
+		echo '<label for="wdcy_email_notifications">';
+		echo '<input type="checkbox" id="wdcy_email_notifications" name="wdcy_email_notifications" value="1" ' . checked( 1, $value, false ) . ' />';
+		echo ' ' . esc_html__( 'Enable weekly email digest', 'decaywatcher' );
 		echo '</label>';
-		echo '<p class="description">' . esc_html__( 'Send a weekly email digest of decaying posts to the admin.', 'post-decay-detector' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Send a weekly email digest of decaying posts to the admin.', 'decaywatcher' ) . '</p>';
 	}
 
 	/**
@@ -181,8 +181,8 @@ class Settings_Page {
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<form method="post" action="options.php">
 				<?php
-				settings_fields( 'cdd_settings_group' );
-				do_settings_sections( 'post-decay-detector' );
+				settings_fields( 'wdcy_settings_group' );
+				do_settings_sections( 'decaywatcher' );
 				submit_button();
 				?>
 			</form>

@@ -24,7 +24,7 @@ class Scanner {
 	 *
 	 * @var string
 	 */
-	const CRON_HOOK = 'cdd_weekly_decay_scan';
+	const CRON_HOOK = 'wdcy_weekly_decay_scan';
 
 	/**
 	 * Number of posts to process per batch.

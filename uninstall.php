@@ -22,13 +22,13 @@ $table_name = $wpdb->prefix . 'decay_snapshots';
 $wpdb->query( "DROP TABLE IF EXISTS {$table_name}" );
 
 // Delete all plugin options.
-delete_option( 'cdd_version' );
-delete_option( 'cdd_decay_threshold' );
-delete_option( 'cdd_scan_frequency' );
-delete_option( 'cdd_email_notifications' );
+delete_option( 'wdcy_version' );
+delete_option( 'wdcy_decay_threshold' );
+delete_option( 'wdcy_scan_frequency' );
+delete_option( 'wdcy_email_notifications' );
 
 // Clear the scheduled cron event.
-$timestamp = wp_next_scheduled( 'cdd_weekly_decay_scan' );
+$timestamp = wp_next_scheduled( 'wdcy_weekly_decay_scan' );
 if ( $timestamp ) {
-	wp_unschedule_event( $timestamp, 'cdd_weekly_decay_scan' );
+	wp_unschedule_event( $timestamp, 'wdcy_weekly_decay_scan' );
 }

@@ -40,8 +40,8 @@ class Plugin {
 	 * Constructor. Registers activation and deactivation hooks.
 	 */
 	private function __construct() {
-		register_activation_hook( CDD_PLUGIN_FILE, array( $this, 'activate' ) );
-		register_deactivation_hook( CDD_PLUGIN_FILE, array( $this, 'deactivate' ) );
+		register_activation_hook( WDCY_PLUGIN_FILE, array( $this, 'activate' ) );
+		register_deactivation_hook( WDCY_PLUGIN_FILE, array( $this, 'deactivate' ) );
 		$this->maybe_install();
 		$this->register_admin();
 		$this->register_scanner();

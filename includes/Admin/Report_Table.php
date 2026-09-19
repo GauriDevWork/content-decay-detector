@@ -85,12 +85,12 @@ class Report_Table extends \WP_List_Table {
 	public function get_columns(): array {
 		return array(
 			'cb'            => '<input type="checkbox" />',
-			'post_title'    => __( 'Post Title', 'post-decay-detector' ),
-			'decay_score'   => __( 'Decay Score', 'post-decay-detector' ),
-			'traffic_score' => __( 'Traffic Score', 'post-decay-detector' ),
-			'snapshot_date' => __( 'Last Scanned', 'post-decay-detector' ),
-			'suggestions'   => __( 'Suggestions', 'post-decay-detector' ),
-			'status'        => __( 'Status', 'post-decay-detector' ),
+			'post_title'    => __( 'Post Title', 'decaywatcher' ),
+			'decay_score'   => __( 'Decay Score', 'decaywatcher' ),
+			'traffic_score' => __( 'Traffic Score', 'decaywatcher' ),
+			'snapshot_date' => __( 'Last Scanned', 'decaywatcher' ),
+			'suggestions'   => __( 'Suggestions', 'decaywatcher' ),
+			'status'        => __( 'Status', 'decaywatcher' ),
 		);
 	}
 
@@ -114,8 +114,8 @@ class Report_Table extends \WP_List_Table {
 	 */
 	protected function get_bulk_actions(): array {
 		return array(
-			'mark_reviewed' => __( 'Mark as Reviewed', 'post-decay-detector' ),
-			'exclude'       => __( 'Exclude from Scanning', 'post-decay-detector' ),
+			'mark_reviewed' => __( 'Mark as Reviewed', 'decaywatcher' ),
+			'exclude'       => __( 'Exclude from Scanning', 'decaywatcher' ),
 		);
 	}
 
@@ -140,7 +140,7 @@ class Report_Table extends \WP_List_Table {
 	protected function column_post_title( array $item ): string {
 		$post = get_post( (int) $item['post_id'] );
 		if ( ! $post ) {
-			return esc_html__( '(Post not found)', 'post-decay-detector' );
+			return esc_html__( '(Post not found)', 'decaywatcher' );
 		}
 
 		$title    = esc_html( $post->post_title );
@@ -148,8 +148,8 @@ class Report_Table extends \WP_List_Table {
 		$view_url = esc_url( get_permalink( $post->ID ) );
 
 		$actions = array(
-			'edit' => '<a href="' . $edit_url . '">' . esc_html__( 'Edit', 'post-decay-detector' ) . '</a>',
-			'view' => '<a href="' . $view_url . '" target="_blank">' . esc_html__( 'View', 'post-decay-detector' ) . '</a>',
+			'edit' => '<a href="' . $edit_url . '">' . esc_html__( 'Edit', 'decaywatcher' ) . '</a>',
+			'view' => '<a href="' . $view_url . '" target="_blank">' . esc_html__( 'View', 'decaywatcher' ) . '</a>',
 		);
 
 		return '<strong>' . $title . '</strong>' . $this->row_actions( $actions );
@@ -202,7 +202,7 @@ class Report_Table extends \WP_List_Table {
 	protected function column_suggestions( array $item ): string {
 		$suggestions = json_decode( $item['suggestions'], true );
 		if ( empty( $suggestions ) ) {
-			return '<em>' . esc_html__( 'None', 'post-decay-detector' ) . '</em>';
+			return '<em>' . esc_html__( 'None', 'decaywatcher' ) . '</em>';
 		}
 		$items = array_map( 'esc_html', $suggestions );
 		return '<ul style="margin:0;padding-left:16px;"><li>' . implode( '</li><li>', $items ) . '</li></ul>';
@@ -217,9 +217,9 @@ class Report_Table extends \WP_List_Table {
 	 */
 	protected function column_status( array $item ): string {
 		if ( (int) $item['is_reviewed'] ) {
-			return '<span style="color:#46b450;font-weight:bold;">' . esc_html__( 'Reviewed', 'post-decay-detector' ) . '</span>';
+			return '<span style="color:#46b450;font-weight:bold;">' . esc_html__( 'Reviewed', 'decaywatcher' ) . '</span>';
 		}
-		return '<span style="color:#dc3232;font-weight:bold;">' . esc_html__( 'Flagged', 'post-decay-detector' ) . '</span>';
+		return '<span style="color:#dc3232;font-weight:bold;">' . esc_html__( 'Flagged', 'decaywatcher' ) . '</span>';
 	}
 
 	/**

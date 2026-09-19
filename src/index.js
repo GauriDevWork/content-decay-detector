@@ -45,18 +45,18 @@ const ContentDecayPanel = () => {
     return (
         <>
             <PluginSidebarMoreMenuItem target="cdd-sidebar">
-                { __( 'Content Decay', 'post-decay-detector' ) }
+                { __( 'Content Decay', 'decaywatcher' ) }
             </PluginSidebarMoreMenuItem>
             <PluginSidebar
                 name="cdd-sidebar"
-                title={ __( 'Content Decay', 'post-decay-detector' ) }
+                title={ __( 'Content Decay', 'decaywatcher' ) }
             >
                 <PanelBody>
                     { loading && (
                         <PanelRow>
                             <Spinner />
                             <span style={ { marginLeft: '8px' } }>
-                                { __( 'Loading decay data...', 'post-decay-detector' ) }
+                                { __( 'Loading decay data...', 'decaywatcher' ) }
                             </span>
                         </PanelRow>
                     ) }
@@ -64,7 +64,7 @@ const ContentDecayPanel = () => {
                     { ! loading && ! decayData && (
                         <PanelRow>
                             <p style={ { color: '#46b450', fontWeight: 'bold' } }>
-                                { __( '✓ No decay detected for this post.', 'post-decay-detector' ) }
+                                { __( '✓ No decay detected for this post.', 'decaywatcher' ) }
                             </p>
                         </PanelRow>
                     ) }
@@ -72,7 +72,7 @@ const ContentDecayPanel = () => {
                     { ! loading && decayData && (
                         <>
                             <PanelRow>
-                                <strong>{ __( 'Decay Score:', 'post-decay-detector' ) }</strong>
+                                <strong>{ __( 'Decay Score:', 'decaywatcher' ) }</strong>
                                 <span
                                     style={ {
                                         background: getScoreColor( decayData.decay_score ),
@@ -87,13 +87,13 @@ const ContentDecayPanel = () => {
                                 </span>
                             </PanelRow>
                             <PanelRow>
-                                <strong>{ __( 'Last Scanned:', 'post-decay-detector' ) }</strong>
+                                <strong>{ __( 'Last Scanned:', 'decaywatcher' ) }</strong>
                                 <span style={ { marginLeft: '8px' } }>{ decayData.snapshot_date }</span>
                             </PanelRow>
                             { decayData.suggestions && decayData.suggestions.length > 0 && (
                                 <PanelRow>
                                     <div>
-                                        <strong>{ __( 'Suggestions:', 'post-decay-detector' ) }</strong>
+                                        <strong>{ __( 'Suggestions:', 'decaywatcher' ) }</strong>
                                         <ul style={ { marginTop: '8px', paddingLeft: '16px' } }>
                                             { decayData.suggestions.map( ( suggestion, index ) => (
                                                 <li key={ index }>{ suggestion }</li>
@@ -110,6 +110,6 @@ const ContentDecayPanel = () => {
     );
 };
 
-registerPlugin( 'post-decay-detector', {
+registerPlugin( 'decaywatcher', {
     render: ContentDecayPanel,
 } );

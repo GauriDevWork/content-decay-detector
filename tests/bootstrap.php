@@ -10,12 +10,12 @@ define( 'ABSPATH', __DIR__ . '/' );
 require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 
 // In-memory options store for tests.
-$GLOBALS['cdd_test_options'] = [];
+$GLOBALS['wdcy_test_options'] = [];
 
 if ( ! function_exists( 'get_option' ) ) {
     function get_option( $key, $default = false ) {
-        if ( isset( $GLOBALS['cdd_test_options'][ $key ] ) ) {
-            return $GLOBALS['cdd_test_options'][ $key ];
+        if ( isset( $GLOBALS['wdcy_test_options'][ $key ] ) ) {
+            return $GLOBALS['wdcy_test_options'][ $key ];
         }
         return $default;
     }
@@ -23,7 +23,7 @@ if ( ! function_exists( 'get_option' ) ) {
 
 if ( ! function_exists( 'update_option' ) ) {
     function update_option( $key, $value ) {
-        $GLOBALS['cdd_test_options'][ $key ] = $value;
+        $GLOBALS['wdcy_test_options'][ $key ] = $value;
         return true;
     }
 }

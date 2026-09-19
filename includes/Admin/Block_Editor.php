@@ -33,7 +33,7 @@ class Block_Editor {
 	 * @return void
 	 */
 	public function enqueue_assets(): void {
-		$asset_file = CDD_PLUGIN_DIR . 'build/index.asset.php';
+		$asset_file = WDCY_PLUGIN_DIR . 'build/index.asset.php';
 
 		if ( ! file_exists( $asset_file ) ) {
 			return;
@@ -43,7 +43,7 @@ class Block_Editor {
 
 		wp_enqueue_script(
 			'cdd-block-editor',
-			CDD_PLUGIN_URL . 'build/index.js',
+			WDCY_PLUGIN_URL . 'build/index.js',
 			$asset['dependencies'],
 			$asset['version'],
 			true
