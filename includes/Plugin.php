@@ -37,35 +37,14 @@ class Plugin {
 	}
 
 	/**
-	 * Constructor. Registers activation and deactivation hooks.
+	 * Constructor. Wires all plugin components together.
 	 */
 	private function __construct() {
-		register_activation_hook( WDCY_PLUGIN_FILE, array( $this, 'activate' ) );
-		register_deactivation_hook( WDCY_PLUGIN_FILE, array( $this, 'deactivate' ) );
 		$this->maybe_install();
 		$this->register_admin();
 		$this->register_scanner();
 		$this->register_rest_api();
 		$this->register_email();
-	}
-
-	/**
-	 * Runs on plugin activation.
-	 *
-	 * @return void
-	 */
-	public function activate(): void {
-		Installer::run();
-		Scanner::schedule();
-	}
-
-	/**
-	 * Runs on plugin deactivation.
-	 *
-	 * @return void
-	 */
-	public function deactivate(): void {
-		Scanner::unschedule();
 	}
 
 	/**
@@ -80,7 +59,6 @@ class Plugin {
 			Installer::run();
 		}
 	}
-
 
 	/**
 	 * Boot all admin-facing components.

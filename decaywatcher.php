@@ -29,6 +29,30 @@ if ( file_exists( WDCY_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
 }
 
 /**
+ * Runs on plugin activation.
+ *
+ * Fires before plugins_loaded so must be registered here, not inside Plugin class.
+ *
+ * @return void
+ */
+function wdcy_activate(): void {
+	\ContentDecayDetector\Installer::run();
+	\ContentDecayDetector\Scanner::schedule();
+}
+
+/**
+ * Runs on plugin deactivation.
+ *
+ * @return void
+ */
+function wdcy_deactivate(): void {
+	\ContentDecayDetector\Scanner::unschedule();
+}
+
+register_activation_hook( __FILE__, 'wdcy_activate' );
+register_deactivation_hook( __FILE__, 'wdcy_deactivate' );
+
+/**
  * Bootstrap the plugin.
  *
  * Hooked late on plugins_loaded so all WordPress APIs are available.
@@ -38,5 +62,5 @@ if ( file_exists( WDCY_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
 function wdcy_init(): void {
 	\ContentDecayDetector\Plugin::get_instance();
 }
-add_action( 'plugins_loaded', 'wdcy_init' );
 
+add_action( 'plugins_loaded', 'wdcy_init' );
