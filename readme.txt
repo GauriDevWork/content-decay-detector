@@ -8,7 +8,7 @@ Stable tag: 0.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Decaywatcher monitors your WordPress posts for content decay by scoring each post based on age, word count, and engagement — then surfaces actionable fixes.
+Decaywatcher scores your posts for content decay using age, word count, and engagement — then surfaces actionable fixes.
 
 == Description ==
 
